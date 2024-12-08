@@ -115,6 +115,7 @@ const LandingPage = () => {
 
       // If successful, proceed to book meeting
       if (response.data.companyId) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const meetingResponse = await axios.post(
           "http://localhost:3000/api/book-meeting",
           {
