@@ -177,7 +177,7 @@ const LandingPage = () => {
           <h1 className="text-4xl font-bold text-gray-900">
             Personalize Your Company&apos;s Twitter Presence with AI
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-black">
             Create a unique AI agent that tweets in your company&apos;s voice
           </p>
         </div>
@@ -286,7 +286,7 @@ const LandingPage = () => {
 
             {/* Personality Selection */}
             <div className="space-y-2">
-              <label className="block font-medium text-gray-700">
+              <label className="block font-medium text-black">
                 Select Agent Personality
               </label>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -308,7 +308,7 @@ const LandingPage = () => {
                     }
                   >
                     <h3 className="font-semibold">{personality.name}</h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-black">
                       {personality.description}
                     </p>
                   </div>
