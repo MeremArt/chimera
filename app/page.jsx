@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
@@ -6,14 +5,11 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion } from "framer-motion";
+
 import { Play, Pause, Info, BookOpen, Target, ArrowRight } from "lucide-react";
 
-type MotionDivProps = HTMLMotionProps<"div">;
-
-interface PopupContent {
-  [key: string]: string;
-}
+const MotionButton = motion.button;
 
 const FireParticle = () => (
   <motion.div
@@ -42,28 +38,88 @@ const FireParticle = () => (
   />
 );
 
-const FireEffect = () => {
-  return (
-    <div className="absolute bottom-0 left-0 w-full h-64 opacity-30">
-      {[...Array(20)].map((_, i) => (
-        <FireParticle key={i} />
-      ))}
-    </div>
-  );
-};
+const FireEffect = () => (
+  <div className="absolute bottom-0 left-0 w-full h-64 opacity-30">
+    {[...Array(20)].map((_, i) => (
+      <FireParticle key={i} />
+    ))}
+  </div>
+);
 
 const ChimeraLanding = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [audioLoaded, setAudioLoaded] = useState(false);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.load();
+      try {
+        // Attempt to play audio on load
+        audioRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((error) => {
+            console.warn(
+              "Autoplay blocked, waiting for user interaction.",
+              error
+            );
+          });
+      } catch (error) {
+        console.error("Audio playback error:", error);
+      }
     }
   }, []);
+  useEffect(() => {
+    let unmounted = false;
 
-  const toggleAudio = async (): Promise<void> => {
+    const initAudio = async () => {
+      if (audioRef.current && !unmounted) {
+        try {
+          // Wait for audio to load
+          await new Promise((resolve) => {
+            audioRef.current.addEventListener("loadeddata", resolve, {
+              once: true,
+            });
+          });
+
+          setAudioLoaded(true);
+
+          // Try to autoplay
+          try {
+            await audioRef.current.play();
+            setIsPlaying(true);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          } catch (playError) {
+            console.log("Autoplay blocked - waiting for user interaction");
+          }
+        } catch (error) {
+          console.error("Audio initialization error:", error);
+        }
+      }
+    };
+
+    initAudio();
+
+    // Cleanup function
+    return () => {
+      unmounted = true;
+      if (audioRef.current) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+  }, []);
+  useEffect(() => {
+    if (audioRef.current) {
+      // Start with lower volume and fade in
+      audioRef.current.volume = 0.5;
+    }
+  }, [audioLoaded]);
+
+  const toggleAudio = async () => {
     if (audioRef.current) {
       try {
         if (isPlaying) {
@@ -90,26 +146,24 @@ const ChimeraLanding = () => {
       <audio
         ref={audioRef}
         loop
-        src="/path-to-your-audio-file.mp3" // Replace with your audio file path
+        preload="auto"
+        src="audio.mp3"
         className="hidden"
+        onError={(e) => console.error("Audio loading error:", e)}
       />
-      {/* Diagonal split background */}
+
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[#E9FCFF]" />
         <div
           className="absolute inset-0 bg-[#6F7EFF]"
-          style={{
-            clipPath: "polygon(100% 0, 100% 100%, 0 100%)",
-          }}
+          style={{ clipPath: "polygon(100% 0, 100% 100%, 0 100%)" }}
         />
       </div>
 
-      {/* Fire Effects */}
       <div className="absolute inset-0 pointer-events-none">
         <FireEffect />
       </div>
 
-      {/* Central Chimera SVG */}
       <motion.div
         style={{
           position: "absolute",
@@ -130,7 +184,6 @@ const ChimeraLanding = () => {
         />
       </motion.div>
 
-      {/* Main Content */}
       <div className="container mx-auto px-4 py-16 relative z-10 text-white h-screen flex flex-col">
         <motion.div
           style={{ textAlign: "center", marginBottom: "3rem" }}
@@ -139,13 +192,8 @@ const ChimeraLanding = () => {
           transition={{ duration: 0.6 }}
         ></motion.div>
 
-        {/* Audio Controls */}
         <motion.div
-          style={{
-            position: "fixed",
-            top: "1rem",
-            right: "1rem",
-          }}
+          style={{ position: "fixed", top: "1rem", right: "1rem" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
@@ -158,7 +206,6 @@ const ChimeraLanding = () => {
           </button>
         </motion.div>
 
-        {/* Navigation Buttons - Moved to bottom left */}
         <motion.div
           style={{
             position: "fixed",
@@ -188,28 +235,22 @@ const ChimeraLanding = () => {
           ))}
         </motion.div>
 
-        {/* Get Started Button - Moved to bottom right */}
         <motion.div
-          style={{
-            position: "fixed",
-            bottom: "2rem",
-            right: "2rem",
-          }}
+          style={{ position: "fixed", bottom: "2rem", right: "2rem" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <motion.button
+          <MotionButton
             className="px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center gap-2"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Get Started
             <ArrowRight size={20} />
-          </motion.button>
+          </MotionButton>
         </motion.div>
 
-        {/* Popup Content */}
         {activePopup && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
