@@ -1,12 +1,8 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/jsx-key */
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-
 import { Play, Pause, Info, BookOpen, Target, ArrowRight } from "lucide-react";
 
 const MotionButton = motion.button;
@@ -53,71 +49,34 @@ const ChimeraLanding = () => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (audioRef.current) {
-      try {
-        // Attempt to play audio on load
-        audioRef.current
-          .play()
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch((error) => {
-            console.warn(
-              "Autoplay blocked, waiting for user interaction.",
-              error
-            );
-          });
-      } catch (error) {
-        console.error("Audio playback error:", error);
-      }
-    }
-  }, []);
-  useEffect(() => {
-    let unmounted = false;
+    let mounted = true;
 
     const initAudio = async () => {
-      if (audioRef.current && !unmounted) {
+      if (audioRef.current && mounted) {
         try {
-          // Wait for audio to load
-          await new Promise((resolve) => {
-            audioRef.current.addEventListener("loadeddata", resolve, {
-              once: true,
-            });
-          });
-
+          audioRef.current.volume = 0.5;
+          await audioRef.current.play();
+          setIsPlaying(true);
           setAudioLoaded(true);
-
-          // Try to autoplay
-          try {
-            await audioRef.current.play();
-            setIsPlaying(true);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          } catch (playError) {
-            console.log("Autoplay blocked - waiting for user interaction");
-          }
         } catch (error) {
-          console.error("Audio initialization error:", error);
+          console.warn(
+            "Autoplay blocked, waiting for user interaction:",
+            error
+          );
+          setAudioLoaded(true);
         }
       }
     };
 
     initAudio();
 
-    // Cleanup function
     return () => {
-      unmounted = true;
+      mounted = false;
       if (audioRef.current) {
         audioRef.current.pause();
-        setIsPlaying(false);
       }
     };
   }, []);
-  useEffect(() => {
-    if (audioRef.current) {
-      // Start with lower volume and fade in
-      audioRef.current.volume = 0.5;
-    }
-  }, [audioLoaded]);
 
   const toggleAudio = async () => {
     if (audioRef.current) {
@@ -184,37 +143,52 @@ const ChimeraLanding = () => {
         />
       </motion.div>
 
-      <div className="container mx-auto px-4 py-16 relative z-10 text-white h-screen flex flex-col">
-        <motion.div
-          style={{ textAlign: "center", marginBottom: "3rem" }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        ></motion.div>
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="absolute left-8 top-20 -translate-y-1/2 z-20 p-8 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg max-w-lg"
+      >
+        <h1 className="text-4xl font-bold mb-4 text-[#03DBFE] bg-clip-text text-transparent">
+          Power Meets Possibility
+        </h1>
+        <p className="text-lg text-black leading-relaxed">
+          Chimera is an AI-powered business agent that fuses strategy and
+          intelligence to drive unstoppable growth.
+        </p>
+        <ul className="mt-4 space-y-2 text-black">
+          <li className="flex items-center gap-2">🦁 Digital Transformation</li>
+          <li className="flex items-center gap-2">
+            🦁 Ai-agents That Works for You
+          </li>
+          <li className="flex items-center gap-2">🦁 Processes That Evolve</li>
+        </ul>
+        <p className="mt-4 text-black">
+          Ready to turn potential into progress? Get started now.
+        </p>
+      </motion.div>
 
+      <div className="relative z-30">
         <motion.div
-          style={{ position: "fixed", top: "1rem", right: "1rem" }}
+          className="fixed top-4 right-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
           <button
             onClick={toggleAudio}
-            className="p-3 rounded-full bg-purple-600 hover:bg-purple-700 transition-colors"
+            className={`p-3 rounded-full ${
+              audioLoaded
+                ? "bg-purple-600 hover:bg-purple-700"
+                : "bg-purple-400 cursor-wait"
+            } transition-colors`}
           >
             {isPlaying ? <Pause size={20} /> : <Play size={20} />}
           </button>
         </motion.div>
 
         <motion.div
-          style={{
-            position: "fixed",
-            bottom: "2rem",
-            left: "2rem",
-            display: "flex",
-            flexDirection: "row",
-            gap: "1rem",
-          }}
+          className="fixed bottom-8 left-8 flex flex-row gap-4"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
@@ -236,7 +210,7 @@ const ChimeraLanding = () => {
         </motion.div>
 
         <motion.div
-          style={{ position: "fixed", bottom: "2rem", right: "2rem" }}
+          className="fixed bottom-8 right-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
@@ -256,15 +230,7 @@ const ChimeraLanding = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            style={{
-              position: "fixed",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              padding: "1rem",
-            }}
+            className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 z-40"
             onClick={() => setActivePopup(null)}
           >
             <div
