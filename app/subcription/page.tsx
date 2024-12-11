@@ -31,8 +31,8 @@ const PricingCard: React.FC<PricingCardProps> = ({
       )}
     </div>
     <div className="p-6">
-      <div className="text-4xl font-bold">${price}</div>
-      {price > 0 && <div className="text-gray-500 mt-2">/month</div>}
+      <div className="text-4xl text-black font-bold">${price}</div>
+      {price > 0 && <div className="text-black mt-2">/month</div>}
       <p className="text-gray-600 mt-4">{description}</p>
     </div>
     <div className="p-6">
@@ -40,7 +40,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
         {features.map((feature, index) => (
           <li key={index} className="flex items-start">
             <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-            <span>{feature}</span>
+            <span className="text-black">{feature}</span>
           </li>
         ))}
       </ul>
@@ -49,7 +49,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
       <button
         className={`w-full py-2 px-4 rounded-md transition-all duration-300 ${
           isPopular
-            ? "bg-blue-500 text-white hover:bg-blue-600"
+            ? "bg-blue-500 text-black hover:bg-blue-600"
             : "border-2 border-gray-500 text-gray-500 hover:bg-gray-100 hover:border-gray-600"
         }`}
       >
