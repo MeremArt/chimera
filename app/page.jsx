@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play, Pause, Info, BookOpen, Target, ArrowRight } from "lucide-react";
@@ -215,14 +216,16 @@ const ChimeraLanding = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <MotionButton
-            className="px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center gap-2"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Get Started
-            <ArrowRight size={20} />
-          </MotionButton>
+          <Link href="/subcription">
+            <MotionButton
+              className="px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center gap-2"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get Started
+              <ArrowRight size={20} />
+            </MotionButton>
+          </Link>
         </motion.div>
 
         {activePopup && (
