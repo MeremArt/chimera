@@ -218,7 +218,7 @@ const ChimeraLanding = () => {
         >
           <Link href="/subcription">
             <MotionButton
-              className="px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center gap-2"
+              className="px-8 py-4 rounded-lg bg-[#ad98f8] hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
