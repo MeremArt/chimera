@@ -117,7 +117,7 @@ const LandingPage = () => {
       if (response.data.companyId) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const meetingResponse = await axios.post(
-          "http://localhost:3000/api/book-meeting",
+          "https://calendly.com/ugofranklin22/30min",
           {
             companyId: response.data.companyId,
             // You can add preferred date/time here if implementing a calendar picker
@@ -299,8 +299,10 @@ const LandingPage = () => {
                       })
                     }
                   >
-                    <h3 className="font-semibold">{personality.name}</h3>
-                    <p className="text-sm text-black">
+                    <h3 className="font-semibold text-black">
+                      {personality.name}
+                    </h3>
+                    <p className="text-sm text-gray-500">
                       {personality.description}
                     </p>
                   </div>
