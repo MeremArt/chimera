@@ -173,14 +173,6 @@ const LandingPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-8">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Hero Section */}
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-gray-900">
-            Personalize Your Company&apos;s Twitter Presence with AI
-          </h1>
-          <p className="text-xl text-black">
-            Create a unique AI agent that tweets in your company&apos;s voice
-          </p>
-        </div>
 
         {/* Status Messages */}
         {submitStatus.type && (
@@ -198,7 +190,7 @@ const LandingPage = () => {
         {/* Main Form */}
         <div className="bg-white shadow-md rounded-lg p-8">
           <div className="mb-6">
-            <h2 className="text-2xl font-semibold">
+            <h2 className="text-2xl text-black font-semibold">
               Create Your AI Twitter Agent
             </h2>
             <p className="text-gray-600">

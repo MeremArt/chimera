@@ -154,8 +154,8 @@ const ChimeraLanding = () => {
           Power Meets Possibility
         </h1>
         <p className="text-lg text-black leading-relaxed">
-          Chimera is an AI-powered business agent that fuses strategy and
-          intelligence to drive unstoppable growth.
+          Chimera is a universal AI assistant marketplace that fuses strategy
+          and intelligence to drive unstoppable growth.
         </p>
         <ul className="mt-4 space-y-2 text-black">
           <li className="flex items-center gap-2">🦁 Digital Transformation</li>
