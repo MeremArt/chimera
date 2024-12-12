@@ -86,7 +86,7 @@ const SubscriptionPlans = () => {
         "Discord integration",
         "Unlimited requests",
         "Priority support",
-        "Custom agent configuration",
+        "Custom agent plugins",
       ],
       isPopular: true,
     },
