@@ -216,7 +216,7 @@ const ChimeraLanding = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <Link href="/subcription">
+          <Link href="/selectoption">
             <MotionButton
               className="px-8 py-4 rounded-lg bg-[#ad98f8] hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center gap-2"
               whileHover={{ scale: 1.05 }}
