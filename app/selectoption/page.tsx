@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Store, Bot } from "lucide-react";
+import { ArrowRight, Store, Bot, DollarSign } from "lucide-react";
 import Link from "next/link";
 
 const SelectPage = () => {
@@ -17,7 +17,7 @@ const SelectPage = () => {
         </div>
 
         {/* Cards Container */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Plugins Marketplace Card */}
           <div className="group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 cursor-pointer">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
@@ -66,6 +66,34 @@ const SelectPage = () => {
 
                 <div className="flex items-center text-purple-500 group-hover:text-white transition-colors duration-300">
                   Build Custom Agents
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* AI Monetization Hub Card */}
+          <Link href="/monetization">
+            <div className="group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+
+              <div className="relative z-10">
+                <div className="mb-4">
+                  <DollarSign className="h-12 w-12 text-green-500 group-hover:text-white transition-colors duration-300" />
+                </div>
+
+                <h2 className="text-2xl font-semibold text-gray-900 group-hover:text-white mb-4 transition-colors duration-300">
+                  AI Monetization Hub
+                </h2>
+
+                <p className="text-gray-600 group-hover:text-white mb-6 transition-colors duration-300">
+                  Turn your AI innovations into revenue streams. Share or sell
+                  your custom agents and plugins in our community marketplace,
+                  creating passive income opportunities.
+                </p>
+
+                <div className="flex items-center text-green-500 group-hover:text-white transition-colors duration-300">
+                  Start Earning
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </div>
               </div>
