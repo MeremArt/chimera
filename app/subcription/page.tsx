@@ -47,7 +47,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
       </ul>
     </div>
     <div className="p-6">
-      <Link herf="/bookacall">
+      <Link href="/bookacall">
         <button
           className={`w-full py-2 px-4 rounded-md transition-all duration-300 ${
             isPopular
