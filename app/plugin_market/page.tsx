@@ -52,13 +52,13 @@ const PluginMarketplace = () => {
     featuredPlugin,
     {
       id: 2,
-      name: "Customer Support AI",
+      name: "Birdeye Price Oracle",
       description:
-        "Automated customer service agent with natural language processing",
-      price: 0,
+        "Real-time Solana token prices powered by Birdeye's advanced price oracle. Get accurate price data, trading volume, and market trends for any SPL token on Solana.",
+      price: 5.99,
       rating: 4.5,
       downloads: 1200,
-      tags: ["support", "automation"],
+      tags: ["defi", "price-oracle", "solana", "trading", "token-tracking"],
     },
     {
       id: 3,
