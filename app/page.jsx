@@ -4,7 +4,10 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Play, Pause, Info, BookOpen, Target, ArrowRight } from "lucide-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useRouter } from "next/navigation";
+import { Play, Pause, Info, BookOpen, Target } from "lucide-react";
 
 const MotionButton = motion.button;
 
@@ -44,10 +47,19 @@ const FireEffect = () => (
 );
 
 const ChimeraLanding = () => {
+  const router = useRouter();
+  const { connected } = useWallet();
   const [isPlaying, setIsPlaying] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
   const [audioLoaded, setAudioLoaded] = useState(false);
   const audioRef = useRef(null);
+
+  // Handle wallet connection and routing
+  useEffect(() => {
+    if (connected) {
+      router.push("/selectoption");
+    }
+  }, [connected, router]);
 
   useEffect(() => {
     let mounted = true;
@@ -112,6 +124,7 @@ const ChimeraLanding = () => {
         onError={(e) => console.error("Audio loading error:", e)}
       />
 
+      {/* Background gradients */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[#E9FCFF]" />
         <div
@@ -124,6 +137,7 @@ const ChimeraLanding = () => {
         <FireEffect />
       </div>
 
+      {/* Chimera Image */}
       <motion.div
         style={{
           position: "absolute",
@@ -144,6 +158,7 @@ const ChimeraLanding = () => {
         />
       </motion.div>
 
+      {/* Main content box */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -170,6 +185,7 @@ const ChimeraLanding = () => {
       </motion.div>
 
       <div className="relative z-30">
+        {/* Audio control */}
         <motion.div
           className="fixed top-4 right-4"
           initial={{ opacity: 0 }}
@@ -188,6 +204,7 @@ const ChimeraLanding = () => {
           </button>
         </motion.div>
 
+        {/* Navigation buttons */}
         <motion.div
           className="fixed bottom-8 left-8 flex flex-row gap-4"
           initial={{ opacity: 0, x: -20 }}
@@ -210,24 +227,19 @@ const ChimeraLanding = () => {
           ))}
         </motion.div>
 
+        {/* Wallet button */}
         <motion.div
           className="fixed bottom-8 right-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <Link href="/selectoption">
-            <MotionButton
-              className="px-8 py-4 rounded-lg bg-[#ad98f8] hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get Started
-              <ArrowRight size={20} />
-            </MotionButton>
-          </Link>
+          <WalletMultiButton className="px-8 py-4 rounded-lg bg-[#ad98f8] hover:bg-[#ad98f8]/80 transition-colors">
+            Get Started
+          </WalletMultiButton>
         </motion.div>
 
+        {/* Popup */}
         {activePopup && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
