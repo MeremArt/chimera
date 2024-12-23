@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
@@ -9,7 +9,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useRouter } from "next/navigation";
 import { Play, Pause, Info, BookOpen, Target } from "lucide-react";
 
-const MotionButton = motion.button;
+// const MotionButton = motion.button;
 
 const FireParticle = () => (
   <motion.div
