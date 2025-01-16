@@ -50,12 +50,14 @@ const ChimeraLanding = () => {
 
   useEffect(() => {
     let mounted = true;
+    let audioElement = null;
 
     const initAudio = async () => {
       if (audioRef.current && mounted) {
+        audioElement = audioRef.current;
         try {
-          audioRef.current.volume = 0.5;
-          await audioRef.current.play();
+          audioElement.volume = 0.5;
+          await audioElement.play();
           setIsPlaying(true);
           setAudioLoaded(true);
         } catch (error) {
@@ -72,12 +74,11 @@ const ChimeraLanding = () => {
 
     return () => {
       mounted = false;
-      if (audioRef.current) {
-        audioRef.current.pause();
+      if (audioElement) {
+        audioElement.pause();
       }
     };
   }, []);
-
   const toggleAudio = async () => {
     if (audioRef.current) {
       try {
