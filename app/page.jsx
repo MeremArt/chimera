@@ -1,15 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { useRouter } from "next/navigation";
 import { Play, Pause, Info, BookOpen, Target } from "lucide-react";
-
-// const MotionButton = motion.button;
 
 const FireParticle = () => (
   <motion.div
@@ -17,7 +12,7 @@ const FireParticle = () => (
       position: "absolute",
       width: "0.5rem",
       height: "0.5rem",
-      backgroundColor: "#f97316",
+      backgroundColor: "#77FFD9",
       borderRadius: "9999px",
     }}
     initial={{
@@ -48,18 +43,10 @@ const FireEffect = () => (
 
 const ChimeraLanding = () => {
   const router = useRouter();
-  const { connected } = useWallet();
   const [isPlaying, setIsPlaying] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
   const [audioLoaded, setAudioLoaded] = useState(false);
   const audioRef = useRef(null);
-
-  // Handle wallet connection and routing
-  useEffect(() => {
-    if (connected) {
-      router.push("/selectoption");
-    }
-  }, [connected, router]);
 
   useEffect(() => {
     let mounted = true;
@@ -111,6 +98,10 @@ const ChimeraLanding = () => {
     bio: "We are dreamers, innovators, and creators who believe in pushing the boundaries of what's possible. Like the mythical Chimera, we combine different elements to create something extraordinary.",
     mission:
       "Our mission is to harness the power of hybrid innovation, creating solutions that transcend traditional boundaries and reshape the future of technology.",
+  };
+
+  const handleGetStarted = () => {
+    router.push("/selectoption");
   };
 
   return (
@@ -227,16 +218,19 @@ const ChimeraLanding = () => {
           ))}
         </motion.div>
 
-        {/* Wallet button */}
+        {/* Get Started button */}
         <motion.div
           className="fixed bottom-8 right-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <WalletMultiButton className="px-8 py-4 rounded-lg bg-[#ad98f8] hover:bg-[#ad98f8]/80 transition-colors">
+          <button
+            onClick={handleGetStarted}
+            className="px-8 py-4 rounded-lg bg-[#ad98f8] hover:bg-[#ad98f8]/80 transition-colors text-white font-medium"
+          >
             Get Started
-          </WalletMultiButton>
+          </button>
         </motion.div>
 
         {/* Popup */}
