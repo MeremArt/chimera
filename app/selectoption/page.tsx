@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  ArrowRight,
-  Store,
-  Bot,
-  DollarSign,
-  Sparkles,
-  Cpu,
-} from "lucide-react";
+import { ArrowRight, Store, Bot, DollarSign, Cpu } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
